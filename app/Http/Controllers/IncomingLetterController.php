@@ -102,12 +102,15 @@ class IncomingLetterController extends Controller
                     if (!in_array($extension, ['png', 'jpg', 'jpeg', 'pdf'])) continue;
                     $filename = time() . '-'. $attachment->getClientOriginalName();
                     $filename = str_replace(' ', '-', $filename);
-                    $attachment->storeAs('public/attachments', $filename);
+                   $storedPath = 'attachments/' . $filename;
+                    $attachment->move(public_path('attachments'), $filename);
+
                     Attachment::create([
                         'filename' => $filename,
-                        'extension' => $extension,
-                        'user_id' => $user->id,
-                        'letter_id' => $letter->id,
+                            'extension' => $extension,
+                            'path' => $storedPath, // ✅ disimpan ke DB dengan benar
+                            'user_id' => $user->id,
+                            'letter_id' => $letter->id,
                     ]);
                 }
             }
@@ -163,12 +166,14 @@ class IncomingLetterController extends Controller
                     if (!in_array($extension, ['png', 'jpg', 'jpeg', 'pdf'])) continue;
                     $filename = time() . '-'. $attachment->getClientOriginalName();
                     $filename = str_replace(' ', '-', $filename);
-                    $attachment->storeAs('public/attachments', $filename);
+                    $storedPath = 'attachments/' . $filename;
+                    $attachment->move(public_path('attachments'), $filename);
                     Attachment::create([
-                        'filename' => $filename,
-                        'extension' => $extension,
-                        'user_id' => auth()->user()->id,
-                        'letter_id' => $incoming->id,
+                           'filename' => $filename,
+                            'extension' => $extension,
+                            'path' => $storedPath, // ✅ disimpan ke DB dengan benar
+                            'user_id' => $user->id,
+                            'letter_id' => $letter->id,
                     ]);
                 }
             }

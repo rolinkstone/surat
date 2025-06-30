@@ -28,12 +28,12 @@ class Attachment extends Model
      * @return string
      */
     public function getPathUrlAttribute(): string {
-        if (!is_null($this->path)) {
-            return $this->path;
-        }
-
-        return asset('storage/attachments/' . $this->filename);
+    if (!is_null($this->path)) {
+        return asset($this->path);
     }
+
+    return asset('attachments/' . $this->filename);
+}
 
     public function scopeType($query, LetterType $type)
     {
