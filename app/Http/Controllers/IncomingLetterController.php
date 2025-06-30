@@ -110,7 +110,7 @@ class IncomingLetterController extends Controller
                             'extension' => $extension,
                             'path' => $storedPath, // ✅ disimpan ke DB dengan benar
                             'user_id' => $user->id,
-                            'letter_id' => $letter->id,
+                            'letter_id' => $incoming->id, // ✅ gunakan $incoming, bukan $letter
                     ]);
                 }
             }
@@ -175,7 +175,7 @@ class IncomingLetterController extends Controller
                             'extension' => $extension,
                             'path' => $storedPath, // ✅ disimpan ke DB dengan benar
                             'user_id' => $user->id,
-                            'letter_id' => $letter->id,
+                            'letter_id' => $incoming->id, // ✅ gunakan $incoming, bukan $letter
                     ]);
                 }
             }
