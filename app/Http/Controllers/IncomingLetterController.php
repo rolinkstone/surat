@@ -161,6 +161,8 @@ class IncomingLetterController extends Controller
         try {
             $incoming->update($request->validated());
             if ($request->hasFile('attachments')) {
+                 $user = auth()->user(); // ✅ pastikan ini ada
+
                 foreach ($request->attachments as $attachment) {
                     $extension = $attachment->getClientOriginalExtension();
                     if (!in_array($extension, ['png', 'jpg', 'jpeg', 'pdf'])) continue;
