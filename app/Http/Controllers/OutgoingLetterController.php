@@ -120,10 +120,14 @@ public function create()
                     if (!in_array($extension, ['png', 'jpg', 'jpeg', 'pdf'])) continue;
                     $filename = time() . '-'. $attachment->getClientOriginalName();
                     $filename = str_replace(' ', '-', $filename);
-                    $attachment->storeAs('public/attachments', $filename);
+                     $storedPath = 'attachments/' . $filename;
+
+                    $attachment->move(public_path('attachments'), $filename);
+
                     Attachment::create([
                         'filename' => $filename,
                         'extension' => $extension,
+                        'path' => $storedPath,
                         'user_id' => $user->id,
                         'letter_id' => $letter->id,
                     ]);
@@ -181,10 +185,14 @@ public function create()
                     if (!in_array($extension, ['png', 'jpg', 'jpeg', 'pdf'])) continue;
                     $filename = time() . '-'. $attachment->getClientOriginalName();
                     $filename = str_replace(' ', '-', $filename);
-                    $attachment->storeAs('public/attachments', $filename);
+                     $storedPath = 'attachments/' . $filename;
+
+                    $attachment->move(public_path('attachments'), $filename);
+
                     Attachment::create([
                         'filename' => $filename,
                         'extension' => $extension,
+                        'path' => $storedPath, // ✅ sudah tidak error
                         'user_id' => auth()->user()->id,
                         'letter_id' => $outgoing->id,
                     ]);
